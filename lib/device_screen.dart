@@ -66,13 +66,15 @@ class _DeviceState extends State<Device> {
                             right: true,
                             left: true,
                             child: Image.asset('assets/panlogo.png')),
+                        Divider(
+                          height: state.deviceHeight * 0.05,
+                          thickness: 2,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Row(
                               children: <Widget>[
-                                Image.asset('assets/ansynclogo.png',
-                                    height: deviceHeight * 0.12),
                                 Image.asset('assets/futurelogo.png',
                                     height: deviceHeight * 0.06),
                               ],

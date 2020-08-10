@@ -77,13 +77,15 @@ class _ScanForDevicesState extends State<ScanForDevices> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Image.asset('assets/panlogo.png'),
+                      Divider(
+                        height: state.deviceHeight * 0.05,
+                        thickness: 2,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              Image.asset('assets/ansynclogo.png',
-                                  height: state.deviceHeight * 0.12),
                               Image.asset('assets/futurelogo.png',
                                   height: state.deviceHeight * 0.06),
                             ],
@@ -171,7 +173,8 @@ class _ScanForDevicesState extends State<ScanForDevices> {
 
                         try {
                           await state.selectedBTDevice?.disconnect();
-                          await state.selectedBTDevice.connect(autoConnect: false);
+                          await state.selectedBTDevice
+                              .connect(autoConnect: false);
                           await state.bt.getServices();
                           setState(() {
                             state.btConnected = true;
@@ -203,33 +206,39 @@ class _ScanForDevicesState extends State<ScanForDevices> {
               _editLocation(context, index.toString(), device);
             },
       child: Column(
-          children: <Widget>[
-            Padding(padding: EdgeInsets.only(top: 2)),
-            Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        Column(
-          children: <Widget>[
-              Text("Device Name",
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              Text(device.name)
-          ],
-        ),
-        SizedBox(width: 8.0,),
-        Column(
-          children: <Widget>[
-              Text("Device ID",
-                  style: TextStyle(fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis,),
-                  (Platform.isIOS) ? Text(device.id.id.substring(14, device.id.id.length)) :
-                  Text(device.id.toString())
-          ],
-        )
-      ],
+        children: <Widget>[
+          Padding(padding: EdgeInsets.only(top: 2)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  Text("Device Name",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text(device.name)
+                ],
               ),
-            Padding(padding: EdgeInsets.only(bottom: 2)),
-            Divider()
-          ],
-        ),
+              SizedBox(
+                width: 8.0,
+              ),
+              Column(
+                children: <Widget>[
+                  Text(
+                    "Device ID",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  (Platform.isIOS)
+                      ? Text(device.id.id.substring(14, device.id.id.length))
+                      : Text(device.id.toString())
+                ],
+              )
+            ],
+          ),
+          Padding(padding: EdgeInsets.only(bottom: 2)),
+          Divider()
+        ],
+      ),
     );
   }
 }
