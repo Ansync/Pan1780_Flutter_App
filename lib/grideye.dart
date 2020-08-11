@@ -23,26 +23,33 @@ class PixelState extends State<Pixel> {
     return ((dTemp - tempMin) / (tempMax - tempMin)) * (1.0 - (-1.0)) + -1.0;
   }
 
-  double interpolate( double val, double y0, double x0, double y1, double x1 ) {
-    return (val-x0)*(y1-y0)/(x1-x0) + y0;
+  double interpolate(double val, double y0, double x0, double y1, double x1) {
+    return (val - x0) * (y1 - y0) / (x1 - x0) + y0;
   }
 
-  double base( double val ) {
-    if ( val <= -0.75 ) return 0;
-    else if ( val <= -0.25 ) return interpolate( val, 0.0, -0.75, 1.0, -0.25 );
-    else if ( val <= 0.25 ) return 1.0;
-    else if ( val <= 0.75 ) return interpolate( val, 1.0, 0.25, 0.0, 0.75 );
-    else return 0.0;
+  double base(double val) {
+    if (val <= -0.75)
+      return 0;
+    else if (val <= -0.25)
+      return interpolate(val, 0.0, -0.75, 1.0, -0.25);
+    else if (val <= 0.25)
+      return 1.0;
+    else if (val <= 0.75)
+      return interpolate(val, 1.0, 0.25, 0.0, 0.75);
+    else
+      return 0.0;
   }
 
-  double red( double gray ) {
-      return base( gray - 0.5 );
+  double red(double gray) {
+    return base(gray - 0.5);
   }
-  double green( double gray ) {
-      return base( gray );
+
+  double green(double gray) {
+    return base(gray);
   }
-  double blue( double gray ) {
-      return base( gray + 0.5 );
+
+  double blue(double gray) {
+    return base(gray + 0.5);
   }
 
   Color buildPixelColor(int bit) {
@@ -75,26 +82,24 @@ class PixelState extends State<Pixel> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: state.maskData,
-          child: Container(
-        color:
-            buildPixelColor(state.maskData.mask[8 * widget.row + widget.column]),
+      child: Container(
+        color: buildPixelColor(
+            state.maskData.mask[8 * widget.row + widget.column]),
         child: Container(
           decoration: BoxDecoration(border: Border.all(color: Colors.black54)),
           child: SizedBox(
             width: state.deviceWidth * 0.075,
             height: state.deviceWidth * 0.075,
             child: InkWell(onTap: () async {
-
               var index = 8 * widget.row + widget.column;
 
-              var newBit = state.maskData
-                  .getPixel(widget.row, widget.column);
+              var newBit = state.maskData.getPixel(widget.row, widget.column);
 
               newBit = 1 ^ newBit;
 
               setState(() {
-                  state.maskData.toggle(widget.row, widget.column);
-                });
+                state.maskData.toggle(widget.row, widget.column);
+              });
 
               // var resp = await state.selectedDevice
               //     .sendCommand("updateMask:$newBit:$index");
@@ -123,7 +128,7 @@ class Grideye extends StatefulWidget {
 
 class _GrideyeState extends State<Grideye> {
   Timer updateTimer;
-  
+
   @override
   void initState() {
     // TODO: implement initState
@@ -157,23 +162,28 @@ class _GrideyeState extends State<Grideye> {
     }
 
     return Scaffold(
-        appBar: AppBar(
-    title: Text("Grideye", style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: state.deviceHeight * 0.03)),
-    centerTitle: true,
-        ),
-        body: Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: <Widget>[
-      Text("Panasonic\nAMG8833 Grideye Sensor", textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold, fontSize: state.deviceHeight * 0.035)),
-         Container(
+      appBar: AppBar(
+        title: Text("Grideye",
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: state.deviceHeight * 0.03)),
+        centerTitle: true,
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Text("Panasonic\nAMG8833 Grideye Sensor",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: state.deviceHeight * 0.035)),
+          Container(
             height: state.deviceHeight * 0.05,
           ),
-      Column(mainAxisAlignment: MainAxisAlignment.center, children: rows)
-    ],
-        ),
-      );
+          Column(mainAxisAlignment: MainAxisAlignment.center, children: rows)
+        ],
+      ),
+    );
   }
 }

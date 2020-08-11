@@ -30,7 +30,7 @@ class _ParticleSensorState extends State<ParticleSensor> {
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: state.deviceHeight * 0.03)),
-             Container(
+          Container(
             height: state.deviceHeight * 0.05,
           ),
           ChangeNotifierProvider.value(
@@ -56,7 +56,6 @@ class LiveParticleChart extends StatefulWidget {
 }
 
 class _LiveParticleChartState extends State<LiveParticleChart> {
-
   @override
   void initState() {
     super.initState();
@@ -67,14 +66,13 @@ class _LiveParticleChartState extends State<LiveParticleChart> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return SfCartesianChart(
         primaryXAxis: CategoryAxis(
             labelRotation: 45,
             title: AxisTitle(
-                text: 'Data Point #',
+                text: 'Data Point Count',
                 textStyle: TextStyle(
                     fontStyle: FontStyle.italic, fontWeight: FontWeight.w300))),
         primaryYAxis: CategoryAxis(
@@ -86,36 +84,33 @@ class _LiveParticleChartState extends State<LiveParticleChart> {
         series: <ChartSeries>[
           // Renders line chart
           LineSeries<ParticleData, dynamic>(
-            animationDuration: 100.0,
-            color: Colors.red,
-            legendItemText: "PM1.0",
-            markerSettings: MarkerSettings(isVisible: true),
-            dataSource: state.particleSensor.sensorDataPointsOne,
-            xValueMapper: (ParticleData dataPoint, _) => dataPoint.timeStamp,
-            yValueMapper: (ParticleData dataPoint, _) => dataPoint.data
-          ),
+              animationDuration: 100.0,
+              color: Colors.red,
+              legendItemText: "PM1.0",
+              markerSettings: MarkerSettings(isVisible: true),
+              dataSource: state.particleSensor.sensorDataPointsOne,
+              xValueMapper: (ParticleData dataPoint, _) => dataPoint.timeStamp,
+              yValueMapper: (ParticleData dataPoint, _) => dataPoint.data),
 
           // Renders line chart
           LineSeries<ParticleData, dynamic>(
-            animationDuration: 100.0,
-            color: Colors.green,
-            legendItemText: "PM2.5",
-            markerSettings: MarkerSettings(isVisible: true),
-            dataSource: state.particleSensor.sensorDataPointsTwo,
-            xValueMapper: (ParticleData dataPoint, _) => dataPoint.timeStamp,
-            yValueMapper: (ParticleData dataPoint, _) => dataPoint.data
-          ),  
+              animationDuration: 100.0,
+              color: Colors.green,
+              legendItemText: "PM2.5",
+              markerSettings: MarkerSettings(isVisible: true),
+              dataSource: state.particleSensor.sensorDataPointsTwo,
+              xValueMapper: (ParticleData dataPoint, _) => dataPoint.timeStamp,
+              yValueMapper: (ParticleData dataPoint, _) => dataPoint.data),
 
           // Renders line chart
           LineSeries<ParticleData, dynamic>(
-            animationDuration: 100.0,
-            color: Colors.blue,
-            legendItemText: "PM10",
-            markerSettings: MarkerSettings(isVisible: true),
-            dataSource: state.particleSensor.sensorDataPointsThree,
-            xValueMapper: (ParticleData dataPoint, _) => dataPoint.timeStamp,
-            yValueMapper: (ParticleData dataPoint, _) => dataPoint.data)
-          ,
+              animationDuration: 100.0,
+              color: Colors.blue,
+              legendItemText: "PM10",
+              markerSettings: MarkerSettings(isVisible: true),
+              dataSource: state.particleSensor.sensorDataPointsThree,
+              xValueMapper: (ParticleData dataPoint, _) => dataPoint.timeStamp,
+              yValueMapper: (ParticleData dataPoint, _) => dataPoint.data),
         ]);
   }
 }

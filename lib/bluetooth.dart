@@ -80,10 +80,6 @@ class Bluetooth {
           var data = String.fromCharCodes(v, 0, v.length);
           var timestamp = (DateTime.now().millisecondsSinceEpoch / 1000).ceil();
           state.particleSensor.addParticleData(data, timestamp);
-          // var splitData = data.split(',');
-          // var dataLstInt = splitData.map((e) => int.parse(e)).toList();
-          // state.particleSensor.addParticleData(dataLstInt);
-          // state.particleSensor.secretNotify();
         }
       }
     }

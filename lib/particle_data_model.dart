@@ -23,40 +23,39 @@ class ParticleDataSensor extends ChangeNotifier {
   List<ParticleData> sensorDataPointsOne = [];
   List<ParticleData> sensorDataPointsTwo = [];
   List<ParticleData> sensorDataPointsThree = [];
-  
+
   void addParticleData(String data, int ts) {
     var letter = data[0];
-    //print("Data: $data");
     if (letter == lMass) {
-      sensorDataPointsOne.add(ParticleData(data: double.parse(data.substring(1)), timeStamp: count));
+      sensorDataPointsOne.add(ParticleData(
+          data: double.parse(data.substring(1)), timeStamp: count));
+      receivedL = true;
     }
     if (letter == mMass) {
-      sensorDataPointsTwo.add(ParticleData(data: double.parse(data.substring(1)), timeStamp: count));
+      sensorDataPointsTwo.add(ParticleData(
+          data: double.parse(data.substring(1)), timeStamp: count));
+      receivedM = true;
     }
     if (letter == nMass) {
-      sensorDataPointsThree.add(ParticleData(data: double.parse(data.substring(1)), timeStamp: count));
-      count++;
+      receivedN = true;
+      sensorDataPointsThree.add(ParticleData(
+          data: double.parse(data.substring(1)), timeStamp: count));
     }
 
-    //Todo - Add our counts?
-    // if(letter == countO) {
-
-    // }
-    // if (letter == countP) {
-
-    // }
-    // if (letter == countP) {
-
-    // }
-
+    if (receivedL && receivedM && receivedN) {
+      count++;
+      receivedL = !receivedL;
+      receivedM = !receivedM;
+      receivedN = !receivedN;
+    }
 
     //if we get too many values start dropping from the front
-    if(sensorDataPointsOne.length > 6) {
+    if (sensorDataPointsOne.length > 10) {
       sensorDataPointsOne.removeAt(0);
       sensorDataPointsTwo.removeAt(0);
       sensorDataPointsThree.removeAt(0);
     }
-    
+
     secretNotify();
   }
 
@@ -65,7 +64,6 @@ class ParticleDataSensor extends ChangeNotifier {
   }
 
   void start() {
-    timer?.cancel();
     count = 0;
   }
 
@@ -73,7 +71,6 @@ class ParticleDataSensor extends ChangeNotifier {
     sensorDataPointsOne.clear();
     sensorDataPointsTwo.clear();
     sensorDataPointsThree.clear();
-    timer?.cancel();
     count = 0;
   }
 }
