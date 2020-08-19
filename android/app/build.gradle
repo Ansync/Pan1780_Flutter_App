@@ -47,8 +47,8 @@ android {
         applicationId "com.pansngcja5.ios"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        versionCode 4
+        versionName "0.2"
     }
     signingConfigs {
        release {
