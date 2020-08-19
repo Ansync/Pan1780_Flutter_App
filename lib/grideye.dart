@@ -163,7 +163,7 @@ class _GrideyeState extends State<Grideye> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Grideye",
+        title: Text("Grid-Eye",
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: state.deviceHeight * 0.03)),
@@ -173,7 +173,7 @@ class _GrideyeState extends State<Grideye> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Text("Panasonic\nAMG8833 Grideye Sensor",
+          Text("Panasonic\nAMG8833 Grid-Eye Sensor",
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontWeight: FontWeight.bold,

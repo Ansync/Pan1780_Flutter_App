@@ -60,15 +60,17 @@ class _DeviceState extends State<Device> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
+                        Container(
+                          height: state.deviceHeight * 0.05,
+                        ),
                         SafeArea(
                             bottom: true,
                             top: true,
                             right: true,
                             left: true,
                             child: Image.asset('assets/panlogo.png')),
-                        Divider(
+                        Container(
                           height: state.deviceHeight * 0.05,
-                          thickness: 2,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -91,7 +93,9 @@ class _DeviceState extends State<Device> {
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text("Powered by the PAN1780 Module",
+                    Text(
+                        "Powered by the PAN1780 Bluetooth® 5.0 Low-Energy RF Module",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: state.deviceHeight * 0.035)),
@@ -107,7 +111,7 @@ class _DeviceState extends State<Device> {
                     Container(
                       child: SizedBox(
                           child: RaisedButton(
-                        child: Text("Grideye"),
+                        child: Text("Thermal Sensor Grid-Eye"),
                         onPressed: () {
                           Navigator.pushNamed(context, '/grideye');
                         },

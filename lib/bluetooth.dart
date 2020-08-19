@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'state.dart';
 import 'dart:async';
@@ -76,10 +77,18 @@ class Bluetooth {
         if (v[0] >= 65 && v[0] <= 72) {
           state.maskData.fillQuarterMask(v);
           state.maskData.secretNotify();
-        } else if (v[0] >= 108 && v[0] <= 112) {
+        }
+
+        if (v[0] >= 108 && v[0] <= 110) {
+          //print("Particulate Data");
           var data = String.fromCharCodes(v, 0, v.length);
           var timestamp = (DateTime.now().millisecondsSinceEpoch / 1000).ceil();
           state.particleSensor.addParticleData(data, timestamp);
+        }
+
+        if (v[0] >= 111 && v[0] <= 113) {
+          var timestamp = (DateTime.now().millisecondsSinceEpoch / 1000).ceil();
+          state.particleSensor.addCountData(v, timestamp);
         }
       }
     }

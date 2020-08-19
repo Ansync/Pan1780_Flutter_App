@@ -65,6 +65,9 @@ class _ScanForDevicesState extends State<ScanForDevices> {
         padding: EdgeInsets.only(left: itemPadding, right: itemPadding),
         child: Column(
           children: <Widget>[
+            Container(
+              height: state.deviceHeight * 0.05,
+            ),
             SafeArea(
               bottom: true,
               top: true,
@@ -77,9 +80,8 @@ class _ScanForDevicesState extends State<ScanForDevices> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Image.asset('assets/panlogo.png'),
-                      Divider(
+                      Container(
                         height: state.deviceHeight * 0.05,
-                        thickness: 2,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
