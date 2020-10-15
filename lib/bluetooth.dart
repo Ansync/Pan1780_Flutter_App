@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'state.dart';
 import 'dart:async';

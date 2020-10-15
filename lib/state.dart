@@ -1,5 +1,3 @@
-import 'package:panasonic_ble/particle_sensor.dart';
-
 import 'bluetooth.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'mask_data_model.dart';
@@ -19,6 +17,6 @@ class MyState {
   BluetoothDevice selectedBTDevice;
   BluetoothCharacteristic readChar, writeChar;
   Stream<List<int>> notifyStream;
-  List<bool> relayStatus = [ false, false, false ];
+  List<bool> relayStatus = [false, false, false];
   ParticleDataSensor particleSensor = ParticleDataSensor();
 }

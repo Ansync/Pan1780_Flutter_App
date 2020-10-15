@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'mask_data_model.dart';
 import 'state.dart';
 
 var state = MyState();
@@ -92,27 +91,8 @@ class PixelState extends State<Pixel> {
             height: state.deviceWidth * 0.075,
             child: InkWell(onTap: () async {
               var index = 8 * widget.row + widget.column;
-
               var newBit = state.maskData.getPixel(widget.row, widget.column);
-
               newBit = 1 ^ newBit;
-
-              setState(() {
-                state.maskData.toggle(widget.row, widget.column);
-              });
-
-              // var resp = await state.selectedDevice
-              //     .sendCommand("updateMask:$newBit:$index");
-
-              // if (resp) {
-              //   setState(() {
-              //     state.selectedDevice.maskData
-              //         .toggle(widget.row, widget.column);
-              //   });
-              // } else {
-              //   print(
-              //       "${state.selectedDevice.valueMap["deviceID"]}: Failed to update mask.");
-              //}
             }),
           ),
         ),
@@ -131,7 +111,6 @@ class _GrideyeState extends State<Grideye> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     updateTimer = Timer.periodic(Duration(milliseconds: 100), (timer) {
       setState(() {});
@@ -140,7 +119,6 @@ class _GrideyeState extends State<Grideye> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     updateTimer?.cancel();
   }
