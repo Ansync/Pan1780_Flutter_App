@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:panasonic_ble/pan_logo.dart';
 import 'state.dart';
 
 final state = MyState();
@@ -42,118 +43,83 @@ class _DeviceState extends State<Device> {
     double bannerHeight = MediaQuery.of(context).size.height * 0.3;
     double itemPadding = deviceWidth * 0.05;
     return WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Padding(
-          padding: EdgeInsets.only(left: itemPadding, right: itemPadding),
-          child: Column(
-            children: <Widget>[
-              SafeArea(
-                bottom: true,
-                top: true,
-                right: true,
-                left: true,
-                child: Container(
-                  child: SizedBox(
-                    height: bannerHeight,
-                    child: Column(
+        onWillPop: () async => false,
+        child: SafeArea(
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            body: Padding(
+              padding: EdgeInsets.only(left: itemPadding, right: itemPadding),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    child: SizedBox(child: PanLogo()),
+                  ),
+                  Container(
+                    child: SizedBox(
+                        child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
+                        Text(
+                            "Powered by the PAN1780 Bluetooth® 5.0 Low-Energy RF Module",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: state.deviceHeight * 0.035)),
+                        Container(height: state.deviceHeight * 0.05, width: 0),
+                        Text("Connected To: ${state.selectedBTDevice.name}"),
+                        Container(height: state.deviceHeight * 0.05, width: 0),
+                      ],
+                    )),
+                  ),
+                  Expanded(
+                    child: Column(
+                      children: <Widget>[
                         Container(
-                          height: state.deviceHeight * 0.05,
+                          child: SizedBox(
+                              child: RaisedButton(
+                            child: Text("Thermal Sensor Grid-Eye"),
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/grideye');
+                            },
+                          )),
                         ),
-                        SafeArea(
-                            bottom: true,
-                            top: true,
-                            right: true,
-                            left: true,
-                            child: Image.asset('assets/panlogo.png')),
                         Container(
-                          height: state.deviceHeight * 0.05,
+                          child: SizedBox(
+                              child: RaisedButton(
+                            child: Text("Particle Sensor"),
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/particle_sensor');
+                            },
+                          )),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Image.asset('assets/futurelogo.png',
-                                    height: deviceHeight * 0.06),
-                              ],
-                            )
-                          ],
-                        )
                       ],
                     ),
                   ),
-                ),
-              ),
-              Container(
-                child: SizedBox(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                        "Powered by the PAN1780 Bluetooth® 5.0 Low-Energy RF Module",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: state.deviceHeight * 0.035)),
-                    Container(height: state.deviceHeight * 0.05, width: 0),
-                    Text("Connected To: ${state.selectedBTDevice.name}"),
-                    Container(height: state.deviceHeight * 0.05, width: 0),
-                  ],
-                )),
-              ),
-              Expanded(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      child: SizedBox(
-                          child: RaisedButton(
-                        child: Text("Thermal Sensor Grid-Eye"),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/grideye');
-                        },
-                      )),
+                  Container(
+                    child: SizedBox(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          RaisedButton(
+                              child: Text("Disconnect"),
+                              onPressed: () async {
+                                try {
+                                  await state.selectedBTDevice.disconnect();
+                                  state.particleSensor.cleanUp();
+                                  Navigator.popAndPushNamed(context, "/");
+                                } catch (err) {
+                                  print("Error Disconnecting: " + err);
+                                }
+                              })
+                        ],
+                      ),
                     ),
-                    Container(
-                      child: SizedBox(
-                          child: RaisedButton(
-                        child: Text("Particle Sensor"),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/particle_sensor');
-                        },
-                      )),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                child: SizedBox(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      RaisedButton(
-                          child: Text("Disconnect"),
-                          onPressed: () async {
-                            try {
-                              await state.selectedBTDevice.disconnect();
-                              state.particleSensor.cleanUp();
-                              Navigator.popAndPushNamed(context, "/");
-                            } catch (err) {
-                              print("Error Disconnecting: " + err);
-                            }
-                          })
-                    ],
                   ),
-                ),
+                  Container(height: state.deviceHeight * 0.05, width: 0),
+                ],
               ),
-              Container(height: state.deviceHeight * 0.05, width: 0),
-            ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

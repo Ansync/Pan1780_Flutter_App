@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:panasonic_ble/pan_logo.dart';
 import 'dart:async';
 import 'state.dart';
 
@@ -59,79 +60,53 @@ class _ScanForDevicesState extends State<ScanForDevices> {
       },
     );
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: EdgeInsets.only(left: itemPadding, right: itemPadding),
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: state.deviceHeight * 0.05,
-            ),
-            SafeArea(
-              bottom: true,
-              top: true,
-              right: true,
-              left: true,
-              child: Container(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Padding(
+          padding: EdgeInsets.only(left: itemPadding, right: itemPadding),
+          child: Column(
+            children: <Widget>[
+              Container(
+                child: SizedBox(child: PanLogo()),
+              ),
+              Container(
+                height: state.deviceHeight * 0.05,
+              ),
+              Container(
+                alignment: Alignment.topCenter,
                 child: SizedBox(
-                  height: bannerHeight,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Image.asset('assets/panlogo.png'),
-                      Container(
-                        height: state.deviceHeight * 0.05,
+                    height: spaceBetween,
+                    child: Scrollbar(
+                      child: ListView.builder(
+                        itemCount: state.bt.scannedDevices.length,
+                        itemBuilder: (context, index) {
+                          return scannedDeviceRow(
+                              index, state.bt.scannedDevices[index]);
+                        },
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Image.asset('assets/futurelogo.png',
-                                  height: state.deviceHeight * 0.06),
-                            ],
-                          )
-                        ],
-                      )
+                    )),
+              ),
+              Container(
+                child: SizedBox(
+                  height: buttonSectionHeight * 1.1,
+                  child: Column(
+                    children: <Widget>[
+                      (!connecting)
+                          ? Text("")
+                          : Text("Trying to connect...",
+                              style: TextStyle(fontSize: 15)),
+                      (!state.scanning && !connecting)
+                          ? scanButton
+                          : (!state.scanning && connecting)
+                              ? CircularProgressIndicator()
+                              : scanningButton,
                     ],
                   ),
                 ),
               ),
-            ),
-            Container(
-              alignment: Alignment.topCenter,
-              child: SizedBox(
-                  height: spaceBetween,
-                  child: Scrollbar(
-                    child: ListView.builder(
-                      itemCount: state.bt.scannedDevices.length,
-                      itemBuilder: (context, index) {
-                        return scannedDeviceRow(
-                            index, state.bt.scannedDevices[index]);
-                      },
-                    ),
-                  )),
-            ),
-            Container(
-              child: SizedBox(
-                height: buttonSectionHeight * 1.1,
-                child: Column(
-                  children: <Widget>[
-                    (!connecting)
-                        ? Text("")
-                        : Text("Trying to connect...",
-                            style: TextStyle(fontSize: 15)),
-                    (!state.scanning && !connecting)
-                        ? scanButton
-                        : (!state.scanning && connecting)
-                            ? CircularProgressIndicator()
-                            : scanningButton,
-                  ],
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
