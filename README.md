@@ -1,16 +1,7 @@
-# panasonic_1780_particle
+# Flutter Pan1780 Demo App
+Flutter mobile app to demo the Pan1780 module with the SN-GCJA5 module.
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# How to run
+1. Make sure flutter is installed and updated.
+2. Run "flutter pub get" to download packages.
+3. Run "flutter run" with a supported device attached.

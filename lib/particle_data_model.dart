@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'dart:async';
-import './utils.dart';
 
 class ParticleData {
   double data;
