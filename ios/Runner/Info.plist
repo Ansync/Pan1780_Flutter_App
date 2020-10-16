@@ -22,6 +22,8 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>MinimumOSVersion</key>
+	<string>9.0</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>We require access to Bluetooth to connect to the Pan1780 module.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
